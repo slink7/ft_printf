@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 20:00:09 by scambier          #+#    #+#             */
-/*   Updated: 2023/11/23 22:33:28 by scambier         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:50:29 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 
 int	ft_strlen(char *str);
 int	ft_putnbr_base(long n, char *base, int signe);
+int	ft_putnbr_base_unsigned_half(unsigned int nbr, char *base);
 
 int	ft_putchar(va_list p);
 int	ft_putstr(va_list p);

@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 20:23:18 by scambier          #+#    #+#             */
-/*   Updated: 2023/11/23 22:26:32 by scambier         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:50:39 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,23 @@ int	ft_putnbr_base_signed(long nbr, char *base)
 }
 
 int	ft_putnbr_base_unsigned(unsigned long nbr, char *base)
+{
+	unsigned int		ibase;
+	long unsigned int	cast;
+	int					out;
+
+	out = 0;
+	if (!is_base_valid(base))
+		return (0);
+	ibase = ft_strlen(base);
+	cast = nbr;
+	if (cast > ibase - 1)
+		out += ft_putnbr_base_unsigned(cast / ibase, base);
+	out += write(STDOUT, base + (cast % ibase), 1);
+	return (out);
+}
+
+int	ft_putnbr_base_unsigned_half(unsigned int nbr, char *base)
 {
 	unsigned int		ibase;
 	long unsigned int	cast;

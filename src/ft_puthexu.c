@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 20:27:35 by scambier          #+#    #+#             */
-/*   Updated: 2023/11/23 21:42:30 by scambier         ###   ########.fr       */
+/*   Updated: 2023/11/23 22:50:22 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@
 
 int	ft_puthexu(va_list p)
 {
-	return (ft_putnbr_base(va_arg(p, int), "0123456789ABCDEF", 1));
+	return (ft_putnbr_base_unsigned_half(va_arg(p, int), "0123456789ABCDEF"));
 }
