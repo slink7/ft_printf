@@ -1,7 +1,18 @@
 NAME = libftprintf.a
 
 SRC_DIR = src
-SRC = ft_printf.c
+SRC = \
+	ft_putchar.c\
+	ft_putpercent.c\
+	ft_putptr.c\
+	ft_putnbr.c\
+	ft_putunsigned.c\
+	ft_puthexl.c\
+	ft_putstr.c\
+	ft_puthexu.c\
+	ft_printf.c\
+	ft_strlen.c\
+	ft_putnbr_base.c
 SRC_BONUS =
 
 OBJ_DIR = obj
@@ -30,6 +41,11 @@ fclean : clean
 re : fclean all
 
 MAIN : $(NAME)
-	cc main.c -L. -lftprintf
+	cc -c main.c
+	cc main.o -L. -lftprintf
 	./a.out
+	rm main.o
 	rm ./a.out
+
+GETSRC :
+	find ./src -name "ft_*.c"
