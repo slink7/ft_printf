@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 16:50:39 by scambier          #+#    #+#             */
-/*   Updated: 2023/11/23 22:52:19 by scambier         ###   ########.fr       */
+/*   Updated: 2023/11/29 17:25:37 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,6 @@ int	ft_printf(const char *format, ...)
 		format++;
 		out += associate(*format++, p);
 	}
+	va_end(p);
 	return (out);
 }
