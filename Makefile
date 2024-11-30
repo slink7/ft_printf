@@ -1,35 +1,54 @@
+#===CONFIGURATION===
 NAME = libftprintf.a
 
-SRC_DIR = src
-SRC = ft_printf.c
-SRC_BONUS =
+SRC =\
+	src/ft_printf.c
+
+CFLAGS = -Wall -Werror -Wextra -g3
+LFLAGS = 
+
+LIBS = \
+	libft/libft.a\
+
+INCLUDES = -Ilibft/ -I./
 
 OBJ_DIR = obj
-OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC)))))
-OBJ_BONUS = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(notdir $(basename $(SRC_BONUS)))))
 
-CFLAGS = -Wall -Werror -Wextra
+#===AUTOMATIC VARS===
+
+OBJ = $(addprefix $(OBJ_DIR)/, $(addsuffix .o, $(basename $(SRC))))
+
+LIB_FLAGS = $(addprefix -L, $(dir $(LIBS))) $(addprefix -l, $(patsubst lib%.a, %, $(notdir $(LIBS))))
+
+#===TARGETS===
 
 all : $(NAME)
 
+#===COMPILING===
 $(OBJ_DIR) :
-	mkdir $(OBJ_DIR)
+	$(shell mkdir -p $(OBJ_DIR))
+$(OBJ_DIR)/%.o : %.c
+	mkdir -p $(dir $@)
+	cc $(CFLAGS) -o $@ -c $< $(INCLUDES)
+%.a :
+	make -C $(dir $@)
 
-$(OBJ_DIR)/%.o : $(SRC_DIR)/%.c $(OBJ_DIR)
-	cc $(CFLAGS) -o $@ -c $<
+#===LINKING===
+$(NAME) : $(OBJ_DIR) $(LIBS) $(OBJ)
+	ar rc $(NAME) $(OBJ) $(LIBS)
 
-$(NAME) : $(OBJ)
-	ar rc $(NAME) $(OBJ)
-
+#===CLEAN===
 clean :
 	rm -rf $(OBJ_DIR) || true
 
+#===FCLEAN===
 fclean : clean
-	rm $(NAME) || true
+	rm -f $(NAME) $(NAME_BONUS) || true
 
+#===RE===
 re : fclean all
 
-MAIN : $(NAME)
+main: all
 	cc main.c -L. -lftprintf
-	./a.out
-	rm ./a.out
+
+.PHONY : re fclean clean all default bonus
