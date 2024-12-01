@@ -94,10 +94,21 @@ int	read_conversion_specification(t_conv_spec *out, char *str)
 	return (1);
 }
 
-int	main() {
+void	init_conv_spec(t_conv_spec *out)
+{
+	ft_memset(out, 0, sizeof(t_conv_spec));
+	out->precision = -1;
+}
+
+int	main(int argc, char** argv) {
 	t_conv_spec	conv_spec = {0};
 
-	int out = read_conversion_specification(&conv_spec, "%+#-+126.69s4654g4d6fg");
+	printf("%*.-2d%d\n", 0, 8946, 10);
+
+	if (argc < 2)
+		return (0);
+	init_conv_spec(&conv_spec);
+	int out = read_conversion_specification(&conv_spec, argv[1]);
 	printf("Success : %d\n", out);
 	printf("Flags : %d\n", conv_spec.flags);
 	printf("Field_width : %d\n", conv_spec.field_width);
