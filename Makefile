@@ -2,7 +2,8 @@
 NAME = libftprintf.a
 
 SRC =\
-	src/ft_printf.c
+	src/ft_printf.c\
+	src/conversion_specification.c
 
 CFLAGS = -Wall -Werror -Wextra -g3
 LFLAGS = 
