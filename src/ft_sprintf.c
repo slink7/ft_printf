@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 22:55:16 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/02 23:23:10 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_lis
 		add_int(buffer, spec, va_arg(ap, int));
 	else if (spec->specifier == 'c')
 		add_char(buffer, spec, (char) va_arg(ap, int));
+	else if (spec->specifier == '%')
+		ft_strbuilder_addchar(buffer, '%');
 	(void) spec;
 	(void) ap;
 	//ft_strbuilder_addstr(buffer, "CONVSPEC", 8);
@@ -86,7 +88,7 @@ char	*ft_vsprintf(const char	*format, va_list ap)
 		if (read_conversion_specification(&spec, next_spec, ap))
 			handle_specification(buffer, &spec, ap);
 		format = next_spec + spec.length;
-		next_spec = ft_strchr(format + 1, '%');
+		next_spec = ft_strchr(format, '%');
 	}
 	ft_strbuilder_addstr(buffer, (char *)format, ft_strlen(format));
 	out = ft_strbuilder_build(buffer);

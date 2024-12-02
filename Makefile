@@ -38,7 +38,8 @@ $(OBJ_DIR)/%.o : %.c
 
 #===LINKING===
 $(NAME) : $(OBJ_DIR) $(LIBS) $(OBJ)
-	ar -crs $(LIBS) $(OBJ) 
+	ar -crs $(LIBS) $(OBJ)
+	cp ./libft/libft.a ./libftprintf.a
 
 #===CLEAN===
 clean :
@@ -52,6 +53,6 @@ fclean : clean
 re : fclean all
 
 main: all
-	cc main.c -g3 -Llibft/ -lft
+	cc main.c -w -g3 -Llibft/ -lft
 
 .PHONY : re fclean clean all default bonus
