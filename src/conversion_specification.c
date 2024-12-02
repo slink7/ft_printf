@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:39:56 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/01 18:10:53 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/02 09:26:50 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	flag_predicat(char c)
 	return (0);
 }
 
-int	read_flags(t_conv_spec *out, char *str, int *k)
+int	read_flags(t_conv_spec *out, const char *str, int *k)
 {
 	int	temp;
 
@@ -43,7 +43,7 @@ int	read_flags(t_conv_spec *out, char *str, int *k)
 	return (1);
 }
 
-int	read_number(int	*out, char *str, int *k, va_list ap)
+int	read_number(int	*out, const char *str, int *k, va_list ap)
 {
 	int	offset;
 
@@ -62,7 +62,7 @@ int	read_number(int	*out, char *str, int *k, va_list ap)
 	return (1);
 }
 
-int	read_conversion_specification(t_conv_spec *out, char *str, va_list ap)
+int	read_conversion_specification(t_conv_spec *out, const char *str, va_list ap)
 {
 	int		k;
 	char	*temp;
@@ -70,6 +70,7 @@ int	read_conversion_specification(t_conv_spec *out, char *str, va_list ap)
 	k = 0;
 	if (str[k++] != '%')
 		return (0);
+	init_conv_spec(out);
 	read_flags(out, str, &k);
 	read_number(&out->field_width, str, &k, ap);
 	if (str[k] == '.' && k++)
