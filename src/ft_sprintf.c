@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 22:47:19 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/02 22:55:16 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,10 @@ void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str)
 
 	if (spec->precision == -1)
 		spec->precision = 0x7FFFFFFF;
-	if (!str)
-	{
-		ft_strbuilder_addstr(buffer, "(null)", 6);
-		return ;
-	}
+	if (!str && spec->precision > 5)
+		str = "(null)";
+	else if (!str)
+		str = "";
 	precise_size = ft_min(ft_strlen(str), spec->precision);
 	if (spec->flags & LEFT_ALIGN)
 		ft_strbuilder_addstr(buffer, str, precise_size);
