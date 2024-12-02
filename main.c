@@ -37,6 +37,8 @@ int	main(int argc, char** argv) {
 
 	TEST("N", "[%4.4s]\t[%5.4s]\t[%-4.4s]\t[%-8.4s]\t\n", "01", "012345", "01", "012345");
 
+	TEST("N", "[%c]\t[%c]\t[%4c]\t[%-4c]\n", '\0', 'F', 'F', 'F');
+
 #else
 	ft_printf("%#-0*.*x", 4, 8, 16);
 #endif
