@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:39:56 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 09:26:50 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/02 21:18:39 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ int	read_flags(t_conv_spec *out, const char *str, int *k)
 	temp = flag_predicat(str[*k]);
 	while (temp && ((*k)++))
 	{
-		out->flags |= 1 << temp;
+		out->flags |= 1 << (temp - 1);
 		temp = flag_predicat(str[*k]);
 	}
 	return (1);
