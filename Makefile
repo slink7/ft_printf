@@ -2,6 +2,8 @@
 NAME = libftprintf.a
 
 SRC =\
+	src/ft_sprintf.c\
+	src/ft_dprintf.c\
 	src/ft_printf.c\
 	src/conversion_specification.c
 
