@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:39:56 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 21:18:39 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:49:25 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ int	read_flags(t_conv_spec *out, const char *str, int *k)
 		out->flags |= 1 << (temp - 1);
 		temp = flag_predicat(str[*k]);
 	}
+	if (out->flags & LEFT_ALIGN)
+		out->flags &= ~ZERO_PAD;
+	if (out->flags & SIGNED)
+		out->flags &= ~SPACE;
 	return (1);
 }
 
