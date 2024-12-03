@@ -5,6 +5,8 @@ SRC =\
 	src/ft_sprintf.c\
 	src/ft_dprintf.c\
 	src/ft_printf.c\
+	src/add_char.c\
+	src/add_str.c\
 	src/conversion_specification.c
 
 CFLAGS = -Wall -Werror -Wextra -g3

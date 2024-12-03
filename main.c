@@ -3,7 +3,7 @@
 #include "libft/libft.h"
 #include "src/ft_printf.h"
 
-#define TEST(name, format, ...) printf("\n\n ======= TEST : %s ==================\n\nformat:%s\n", name, format); printf("0"format, __VA_ARGS__); ft_printf("1"format, __VA_ARGS__); printf("\n");
+#define TEST(name, format, ...) printf("\n ======= TEST : %s : format:%s\n", name, format); printf("0"format, __VA_ARGS__); ft_printf("1"format, __VA_ARGS__); printf("\n");
 
 #define TESTS
 
@@ -48,6 +48,10 @@ int	main(int argc, char** argv) {
 	TEST("S", "[%d] [%d] [%d] [%d] [%d] [%d]\n", -1, -12, -23, -89, -90, -101);
 
 	TEST("T", "[%d] [%d] [%d] [%d]\n", -0, -4, -9, -7);
+
+	TEST("U", "[%.5d] [%.6d]\n", -4, -666);
+
+	TEST("V", "[%u] [%u] [%5u] [%.5u] [%8.4u] [%-5u] [%-8.4u]\n", 0, 0xFFFFFFFF, 42, 42, 42, 42, 42);
 
 #else
 
