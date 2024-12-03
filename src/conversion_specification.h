@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:40:28 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 19:44:09 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:54:34 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,6 @@ typedef struct s_conv_spec {
 	int		length;
 }	t_conv_spec;
 
-void	init_conv_spec(t_conv_spec *out);
-int		flag_predicat(char c);
-int		read_flags(t_conv_spec *out, const char *str, int *k);
-int		read_number(int	*out, const char *str, int *k, va_list va);
 int		read_conversion_specification(t_conv_spec *out, const char *str, va_list va);
 
 #endif

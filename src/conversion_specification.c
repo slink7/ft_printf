@@ -6,20 +6,20 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:39:56 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/03 20:49:25 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/03 20:54:25 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "conversion_specification.h"
 
-void	init_conv_spec(t_conv_spec *out)
+static void	init_conv_spec(t_conv_spec *out)
 {
 	ft_memset(out, 0, sizeof(t_conv_spec));
 	out->precision = -1;
 }
 
-int	flag_predicat(char c)
+static int	flag_predicat(char c)
 {
 	const char	*flags = "#0- +";
 	char		*out;
@@ -30,7 +30,7 @@ int	flag_predicat(char c)
 	return (0);
 }
 
-int	read_flags(t_conv_spec *out, const char *str, int *k)
+static int	read_flags(t_conv_spec *out, const char *str, int *k)
 {
 	int	temp;
 
@@ -47,7 +47,7 @@ int	read_flags(t_conv_spec *out, const char *str, int *k)
 	return (1);
 }
 
-int	read_number(int	*out, const char *str, int *k, va_list ap)
+static int	read_number(int	*out, const char *str, int *k, va_list ap)
 {
 	int	offset;
 
