@@ -3,20 +3,24 @@
 #include "libft/libft.h"
 #include "src/ft_printf.h"
 
-#define TEST(name, format, ...) printf("\n ======= TEST : %s : format:%s\n", name, format); printf("0"format, __VA_ARGS__); ft_printf("1"format, __VA_ARGS__); printf("\n");
+#define TEST(name, format, ...) {\
+	dprintf(1, "\n ======= TEST : %s : format:%s\n", name, format);\
+	int a = dprintf(1, "0"format, __VA_ARGS__);\
+	int b = ft_printf("1"format, __VA_ARGS__);\
+	dprintf(1, "diff %d %d\n", a, b);\
+}
 
 #define TESTS
 
 void	tests_cs() {
 	TEST("S0", "[%4s] [%4s] [%.4s] [%.4s] \n", "01", "012345", "01", "012345");
-
 	TEST("S1", "[%4.4s] [%5.4s] [%-4.4s] [%-8.4s] [%.6s] [%.5s] \n", "01", "012345", "01", "012345", 0, 0);
-
 	TEST("S2", "[%c] [%c] [%4c] [%-4c] \n", '\0', 'F', 'F', 'F');
-
 	TEST("S3", "[%%] [%4%] [%.4%] [%#0-4.4%] [ %%%% %%%%%%%%%% ] \n", 0);
-
-	TEST("S4", "[%c] [%c] [%c] [%c] [%c]\n", '0', '0' - 256, 0, '1', '2')
+	TEST("S4", "[%c] [%c] [%c] [%c] [%c]\n", '0', '0' - 256, 0, '1', '2');
+	TEST("S5", "[%c] [%c] [%c]\n", '0', 0, '1');
+	TEST("S6", "[%c] [%c] [%c]\n", '2', '1', 0);
+	TEST("S7", "[%c] [%c] [%c]\n", 0, '1', '2');
 }
 
 void	tests_d() {
@@ -41,10 +45,14 @@ void	tests_u() {
 	TEST("U4", "[%01x] [%.1x] [%06x] [%.6x]\n", 456, 456, 142, 142);
 	TEST("U5", "[%u] [%u] [%5u] [%.5u] [%8.4u] [%-5u] [%-8.4u]\n", 0, 0xFFFFFFFF, 42, 42, 42, 42, 42);
 	TEST("U6", "[%u] [%05u] [%+4u] [% 4u] [% u] [%#.4u]\n", 12, 3, 8, 24, 42, 99)
+	TEST("U7", "[%#8.4x] [%#-8.4x] [%#0-8.0x]\n", 17, 18, 19);
 }
+
+#include <stdio.h>
 
 int	main(int argc, char** argv) {
 	// tests_cs();
 	// tests_d();
 	tests_u();
+	
 }
