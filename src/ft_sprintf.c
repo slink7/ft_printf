@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 23:23:10 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/03 10:48:37 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,32 @@ void	add_char(t_strbuilder *buffer, t_conv_spec *spec, char c)
 		ft_strbuilder_addchar(buffer, c);
 }
 
+void	add_int_base(t_strbuilder *buffer, int value, char *base, int base_size)
+{
+	if (value >= base_size)
+		add_int_base(buffer, value / base_size, base, base_size);
+	ft_strbuilder_addchar(buffer, base[value % base_size]);
+}
+
 void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 {
-	(void) buffer;
+	static char	*base = "0123456789";
+
 	(void) spec;
-	(void) value;
+	if (!value)
+		ft_strbuilder_addchar(buffer, '0');
+	else
+	{
+		if (value < 0)
+		{
+			ft_strbuilder_addchar(buffer, '-');
+			if (value / 10 < 0)
+				add_int_base(buffer, -(value / 10), base, 10);
+			ft_strbuilder_addchar(buffer, - (value % 10) + '0');
+		}
+		else
+			add_int_base(buffer, value, base, 10);
+	}
 }
 
 void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str)
@@ -58,8 +79,13 @@ void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str)
 
 static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_list ap)
 {
-	if (spec->specifier == 's')
-		add_str(buffer, spec, va_arg(ap, char *));
+	char	*temp;
+
+	if (spec->specifier == 's') {
+		temp = 0;
+		temp = va_arg(ap, char *);
+		add_str(buffer, spec, temp);
+	}
 	else if (spec->specifier == 'd' || spec->specifier == 'i')
 		add_int(buffer, spec, va_arg(ap, int));
 	else if (spec->specifier == 'c')
@@ -87,7 +113,7 @@ char	*ft_vsprintf(const char	*format, va_list ap)
 		ft_strbuilder_addstr(buffer, (char *)format, (int)(next_spec - format));
 		if (read_conversion_specification(&spec, next_spec, ap))
 			handle_specification(buffer, &spec, ap);
-		format = next_spec + spec.length;
+		format = next_spec + spec.length;  
 		next_spec = ft_strchr(format, '%');
 	}
 	ft_strbuilder_addstr(buffer, (char *)format, ft_strlen(format));
