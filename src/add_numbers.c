@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/03 20:37:04 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/03 21:08:03 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,11 +90,11 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, u
 	if (spec->flags & PREFIX)
 		number_len += ft_strlen(bases[bi].prefix);
 
-	//printf("number_len: %u, %d\n", value, number_len);
 	if (spec->precision == -1)
 		spec->precision = 1;
 
-	if (spec->flags & LEFT_ALIGN) {
+	if (spec->flags & LEFT_ALIGN)
+	{
 		if (spec->flags & PREFIX)
 			ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 		add_int_base(buffer, value, bases + bi, spec->precision);
@@ -103,7 +103,8 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, u
 	for (int k = 0; k < spec->field_width - number_len; k++)
 		ft_strbuilder_addchar(buffer, (spec->flags & ZERO_PAD) ? '0' : ' ');
 		
-	if (!(spec->flags & LEFT_ALIGN)) {
+	if (!(spec->flags & LEFT_ALIGN))
+	{
 		if (spec->flags & PREFIX)
 			ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 		add_int_base(buffer, value, bases + bi, spec->precision);
