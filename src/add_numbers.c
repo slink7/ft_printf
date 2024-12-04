@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 17:17:03 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:23:48 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ int	ft_nbrlen(unsigned long n, unsigned int base)
 {
 	int	out;
 
+	if (!n)
+		return (1);
 	out = 0;
 	while (n)
 	{
@@ -34,9 +36,8 @@ int	ft_nbrlen(unsigned long n, unsigned int base)
 
 void	add_int_base_rec(t_strbuilder *buffer, unsigned long value, t_base *base)
 {
-	if (!value)
-		return ;
-	add_int_base_rec(buffer, value / base->size, base);
+	if (value >= base->size)
+		add_int_base_rec(buffer, value / base->size, base);
 	ft_strbuilder_addchar(buffer, base->digits[value % base->size]);
 }
 
