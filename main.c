@@ -49,10 +49,22 @@ void	tests_u() {
 	TEST("U7", "[%#8.4x] [%#-8.4x] [%#0-8.0x]\n", 17, 18, 19);
 }
 
+void	test_p() {
+	char *p = "";
+	TEST("P0", "[%p] [%p]\n", 0, p);
+	TEST("P0", "[%1.1p] [%1.1p]\n", 0, p);
+	TEST("P1", "[%20p] [%.20p]\n", p, p);
+	TEST("P2", "[%-20p] [%-.20p]\n", p, p);
+	TEST("P2", "[%-20p] [%-.20p]\n", 0, 0);
+	TEST("P2", "[%20p] [%.20p]\n", 0, 0);
+	TEST("P2", "[%020p] [%.20p]\n", 0, 0);
+}
+
 #include <stdio.h>
 
 int	main(int argc, char** argv) {
-	// tests_cs();
-	tests_d();
+	tests_cs();
+	// tests_d();
 	// tests_u();
+	// test_p();
 }

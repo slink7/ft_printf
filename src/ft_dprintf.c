@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:02:44 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:50:42 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:42:46 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,15 @@
 int	ft_vdprintf(int fd, const char *format, va_list ap)
 {
 	char	*temp;
+	int		len;
 	int		out;
 
 	temp = ft_vsprintf(format, ap);
 	if (!temp)
 		return (-1);
-	out = write(fd, temp, ft_strlen(temp));
+	len = ft_strlen(temp);
+	ft_strrep(temp, '\006', '\000');
+	out = write(fd, temp, len);
 	free(temp);
 	return (out);
 }
