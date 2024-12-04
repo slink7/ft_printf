@@ -35,6 +35,7 @@ void	tests_d() {
 	TEST("D08", "[%d] [%d] [%d] [%d] [%d] [%d]\n", -1, -12, -23, -89, -90, -101);
 	TEST("D09", "[%d] [%d] [%d] [%d]\n", -0, -4, -9, -7);
 	TEST("D10", "[%.5d] [%.6d]\n", -4, -666);
+	TEST("D11", "[%6.4d] [%06d]\n", -42, -42);
 }
 
 void	tests_u() {
@@ -52,7 +53,6 @@ void	tests_u() {
 
 int	main(int argc, char** argv) {
 	// tests_cs();
-	// tests_d();
-	tests_u();
-	
+	tests_d();
+	// tests_u();
 }

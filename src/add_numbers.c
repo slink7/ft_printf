@@ -6,14 +6,14 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:38:06 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:52:52 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "conversion_specification.h"
 
-typedef struct	s_base {
+typedef struct s_base {
 	char			*digits;
 	unsigned int	size;
 	char			*prefix;
@@ -65,19 +65,15 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 		number_len = ft_max(ft_nbrlen((unsigned int)-value, base.size), spec->precision);
 	else
 		number_len = ft_max(ft_nbrlen(value, base.size), spec->precision);
-
 	if (spec->flags & SIGNED || spec->flags & SPACE || value < 0)
 		number_len++;
 	if (spec->precision == -1)
 		spec->precision = 1;
-	
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
-	
 	if (!(spec->flags & LEFT_ALIGN))
 		for (int k = 0; k < spec->field_width - number_len; k++)
 			ft_strbuilder_addchar(buffer, padding);
-
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && !(spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
 	if (value < 0)
@@ -92,9 +88,9 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi)
 {
 	static t_base	bases[] = {
-		{"0123456789", 10u, ""},
-		{"0123456789abcdef", 16u, "0x"},
-		{"0123456789ABCDEF", 16u, "0X"}
+	{"0123456789", 10u, ""},
+	{"0123456789abcdef", 16u, "0x"},
+	{"0123456789ABCDEF", 16u, "0X"}
 	};
 	int				number_len;
 	char			padding;

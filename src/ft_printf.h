@@ -6,14 +6,14 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:15:37 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/02 09:24:02 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:49:24 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
-#define FT_PRINTF_H
+# define FT_PRINTF_H
 
-#include "stdarg.h"
+# include "stdarg.h"
 
 char	*ft_vsprintf(const char *format, va_list ap);
 char	*ft_sprintf(const char *format, ...);

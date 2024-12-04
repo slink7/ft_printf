@@ -6,14 +6,14 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:40:28 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/03 20:54:34 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:50:11 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CONVERSION_SPECIFICATION
-# define CONVERSION_SPECIFICATION
+#ifndef CONVERSION_SPECIFICATION_H
+# define CONVERSION_SPECIFICATION_H
 
-#include <stdarg.h>
+# include <stdarg.h>
 
 # define PREFIX		0b00001
 # define ZERO_PAD	0b00010

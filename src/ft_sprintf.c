@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:10:58 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:49:55 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_vsprintf(const char	*format, va_list ap)
 	t_strbuilder	*buffer;
 	char			*next_spec;
 	char			*out;
-	
+
 	buffer = ft_strbuilder_new();
 	if (!buffer)
 		return (0);
@@ -55,7 +55,7 @@ char	*ft_vsprintf(const char	*format, va_list ap)
 		ft_strbuilder_addstr(buffer, (char *)format, (int)(next_spec - format));
 		if (read_conversion_specification(&spec, next_spec, ap))
 			handle_specification(buffer, &spec, ap);
-		format = next_spec + spec.length;  
+		format = next_spec + spec.length;
 		next_spec = ft_strchr(format, '%');
 	}
 	ft_strbuilder_addstr(buffer, (char *)format, ft_strlen(format));
