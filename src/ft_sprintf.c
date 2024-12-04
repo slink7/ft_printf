@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:49:55 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:09:27 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	add_char(t_strbuilder *buffer, t_conv_spec *spec, char c);
 void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str);
 void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi);
 void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value);
+void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value);
 
 static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_list ap)
 {
@@ -35,6 +36,8 @@ static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_lis
 		add_unsigned(buffer, spec, va_arg(ap, unsigned int), 1);
 	else if (spec->specifier == 'X')
 		add_unsigned(buffer, spec, va_arg(ap, unsigned int), 2);
+	else if (spec->specifier == 'p')
+		add_pointer(buffer, spec, va_arg(ap, unsigned long));
 	else if (spec->specifier == '%')
 		ft_strbuilder_addchar(buffer, '%');
 }

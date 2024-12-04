@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:52:52 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 17:17:03 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ typedef struct s_base {
 	char			*prefix;
 }	t_base;
 
-int	ft_nbrlen(unsigned int n, unsigned int base)
+int	ft_nbrlen(unsigned long n, unsigned int base)
 {
 	int	out;
 
@@ -32,7 +32,7 @@ int	ft_nbrlen(unsigned int n, unsigned int base)
 	return (out);
 }
 
-void	add_int_base_rec(t_strbuilder *buffer, unsigned int value, t_base *base)
+void	add_int_base_rec(t_strbuilder *buffer, unsigned long value, t_base *base)
 {
 	if (!value)
 		return ;
@@ -40,7 +40,7 @@ void	add_int_base_rec(t_strbuilder *buffer, unsigned int value, t_base *base)
 	ft_strbuilder_addchar(buffer, base->digits[value % base->size]);
 }
 
-void	add_int_base(t_strbuilder *buffer, unsigned int value, t_base *base, int precision)
+void	add_int_base(t_strbuilder *buffer, unsigned long value, t_base *base, int precision)
 {
 	int	nbrlen;
 	int	k;
@@ -85,7 +85,7 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 			ft_strbuilder_addchar(buffer, padding);
 }
 
-void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi)
+void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, unsigned int bi)
 {
 	static t_base	bases[] = {
 	{"0123456789", 10u, ""},
@@ -112,4 +112,22 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, u
 	if ((spec->flags & LEFT_ALIGN))
 		for (int k = 0; k < spec->field_width - number_len; k++)
 			ft_strbuilder_addchar(buffer, padding);
+}
+
+#include <stdio.h>
+
+void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value)
+{
+	if (value)
+	{
+		spec->flags |= PREFIX;
+		add_unsigned(buffer, spec, (unsigned long)value, 1);
+		return ;
+	}
+	if (spec->flags & LEFT_ALIGN)
+		ft_strbuilder_addstr(buffer, "(nil)", 5);
+	for (int k = 0; k < spec->field_width - 5; k++)
+		ft_strbuilder_addchar(buffer, ' ');
+	if (!(spec->flags & LEFT_ALIGN))
+		ft_strbuilder_addstr(buffer, "(nil)", 5);
 }
