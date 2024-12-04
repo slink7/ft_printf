@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/03 20:16:14 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 02:10:58 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 void	add_char(t_strbuilder *buffer, t_conv_spec *spec, char c);
 void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str);
 void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi);
-
+void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value);
 
 static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_list ap)
 {
 	if (spec->specifier == 's')
 		add_str(buffer, spec, va_arg(ap, char *));
 	else if (spec->specifier == 'd' || spec->specifier == 'i')
-		va_arg(ap, int); //add_int(buffer, spec, );
+		add_int(buffer, spec, va_arg(ap, int));
 	else if (spec->specifier == 'c')
 		add_char(buffer, spec, (char) va_arg(ap, int));
 	else if (spec->specifier == 'u')
