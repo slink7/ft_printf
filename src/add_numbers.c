@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 19:23:48 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/04 19:58:37 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	add_int_base(t_strbuilder *buffer, unsigned long value, t_base *base, int p
 	int	nbrlen;
 	int	k;
 
+	if (!precision && !value)
+		return ;
 	nbrlen = ft_nbrlen(value, base->size);
 	k = -1;
 	while (++k < (precision - nbrlen))
@@ -68,6 +70,8 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 		number_len = ft_max(ft_nbrlen(value, base.size), spec->precision);
 	if (spec->flags & SIGNED || spec->flags & SPACE || value < 0)
 		number_len++;
+	if ((spec->flags & LEFT_ALIGN) && spec->precision < 1 && !value)
+		number_len--;
 	if (spec->precision == -1)
 		spec->precision = 1;
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
