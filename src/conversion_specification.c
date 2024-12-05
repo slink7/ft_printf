@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/01 17:39:56 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/03 20:54:25 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/05 01:14:48 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,7 @@ int	read_conversion_specification(t_conv_spec *out, const char *str, va_list ap)
 		return (0);
 	out->specifier = *temp;
 	out->length = k;
+	if (out->precision != -1)
+		out->flags &= ~ZERO_PAD;
 	return (1);
 }
