@@ -36,6 +36,10 @@ void	tests_d() {
 	TEST("D09", "[%d] [%d] [%d] [%d]\n", -0, -4, -9, -7);
 	TEST("D10", "[%.5d] [%.6d]\n", -4, -666);
 	TEST("D11", "[%6.4d] [%06d]\n", -42, -42);
+	TEST("D12", "[%1d] [%-1d] [%1.1d] [%-1.1d]\n", 0, 0, 0, 0);
+	TEST("D13", "[%.0d] [%.d]\n", 0, 0);
+	TEST("D13", "[%.4d] [%.0d]\n", 69420, 69420);
+	TEST("D13", "[%-10.d] [%0-10.d] [%01.0d] [%1.0d]\n", 0, 0, 0, 0);
 }
 
 void	tests_u() {
@@ -47,6 +51,8 @@ void	tests_u() {
 	TEST("U5", "[%u] [%u] [%5u] [%.5u] [%8.4u] [%-5u] [%-8.4u]\n", 0, 0xFFFFFFFF, 42, 42, 42, 42, 42);
 	TEST("U6", "[%u] [%05u] [%+4u] [% 4u] [% u] [%#.4u]\n", 12, 3, 8, 24, 42, 99)
 	TEST("U7", "[%#8.4x] [%#-8.4x] [%#0-8.0x]\n", 17, 18, 19);
+	TEST("U8", "[%1u] [%1u]\n", 6, 0);
+
 }
 
 void	test_p() {
@@ -63,8 +69,8 @@ void	test_p() {
 #include <stdio.h>
 
 int	main(int argc, char** argv) {
-	tests_cs();
-	// tests_d();
+	// tests_cs();
+	tests_d();
 	// tests_u();
 	// test_p();
 }

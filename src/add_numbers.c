@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/05 01:28:51 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/05 16:10:27 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 		number_len++;
 	if (spec->precision == -1)
 		spec->precision = 1;
-	if ((spec->flags & LEFT_ALIGN) && spec->precision < 1 && !value)
+	if (spec->field_width > 0 && value == 0 && spec->precision == 0)
 		number_len--;
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
@@ -102,12 +102,12 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, 
 	char			padding;
 
 	padding = ' ' + !!(spec->flags & ZERO_PAD) * ('0' - ' ');
+	if (spec->precision == -1)
+		spec->precision = 1;
 	number_len = ft_max(ft_nbrlen(value, bases[bi].size), spec->precision);
 	if (spec->flags & PREFIX && value != 0)
 		number_len += ft_strlen(bases[bi].prefix);
-	if (spec->precision == -1)
-		spec->precision = 1;
-	if ((spec->flags & LEFT_ALIGN) && spec->precision < 1 && !value)
+	if (spec->field_width > 0 && value == 0 && spec->precision == 0)
 		number_len--;
 	if (spec->flags & ZERO_PAD && spec->flags & PREFIX && value != 0)
 		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
