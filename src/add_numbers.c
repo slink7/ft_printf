@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 20:08:03 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/05 01:28:51 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 		number_len--;
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
+	
 	if (!(spec->flags & LEFT_ALIGN))
 		for (int k = 0; k < spec->field_width - number_len; k++)
 			ft_strbuilder_addchar(buffer, padding);
@@ -102,18 +103,18 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, 
 
 	padding = ' ' + !!(spec->flags & ZERO_PAD) * ('0' - ' ');
 	number_len = ft_max(ft_nbrlen(value, bases[bi].size), spec->precision);
-	if (spec->flags & PREFIX)
+	if (spec->flags & PREFIX && value != 0)
 		number_len += ft_strlen(bases[bi].prefix);
 	if (spec->precision == -1)
 		spec->precision = 1;
 	if ((spec->flags & LEFT_ALIGN) && spec->precision < 1 && !value)
 		number_len--;
-	if (spec->flags & ZERO_PAD && spec->flags & PREFIX)
+	if (spec->flags & ZERO_PAD && spec->flags & PREFIX && value != 0)
 		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	if (!(spec->flags & LEFT_ALIGN))
 		for (int k = 0; k < spec->field_width - number_len; k++)
 			ft_strbuilder_addchar(buffer, padding);
-	if ((spec->flags & PREFIX) && !(spec->flags & ZERO_PAD))
+	if ((spec->flags & PREFIX) && !(spec->flags & ZERO_PAD) && value != 0)
 		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	add_int_base(buffer, value, bases + bi, spec->precision);
 	if ((spec->flags & LEFT_ALIGN))
