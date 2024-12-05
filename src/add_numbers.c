@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/03 19:18:26 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/05 16:10:27 by scambier         ###   ########.fr       */
+/*   Updated: 2024/12/05 17:24:27 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,8 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 		number_len--;
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
-	
 	if (!(spec->flags & LEFT_ALIGN))
-		for (int k = 0; k < spec->field_width - number_len; k++)
-			ft_strbuilder_addchar(buffer, padding);
+		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && !(spec->flags & ZERO_PAD))
 		ft_strbuilder_addchar(buffer, sign);
 	if (value < 0)
@@ -87,8 +85,7 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 	else
 		add_int_base(buffer, value, &base, spec->precision);
 	if ((spec->flags & LEFT_ALIGN))
-		for (int k = 0; k < spec->field_width - number_len; k++)
-			ft_strbuilder_addchar(buffer, padding);
+		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
 }
 
 void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, unsigned int bi)
@@ -112,14 +109,12 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, 
 	if (spec->flags & ZERO_PAD && spec->flags & PREFIX && value != 0)
 		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	if (!(spec->flags & LEFT_ALIGN))
-		for (int k = 0; k < spec->field_width - number_len; k++)
-			ft_strbuilder_addchar(buffer, padding);
+		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
 	if ((spec->flags & PREFIX) && !(spec->flags & ZERO_PAD) && value != 0)
 		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	add_int_base(buffer, value, bases + bi, spec->precision);
 	if ((spec->flags & LEFT_ALIGN))
-		for (int k = 0; k < spec->field_width - number_len; k++)
-			ft_strbuilder_addchar(buffer, padding);
+		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
 }
 
 #include <stdio.h>
@@ -134,8 +129,7 @@ void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value)
 	}
 	if (spec->flags & LEFT_ALIGN)
 		ft_strbuilder_addstr(buffer, "(nil)", 5);
-	for (int k = 0; k < spec->field_width - 5; k++)
-		ft_strbuilder_addchar(buffer, ' ');
+	ft_strbuilder_setchars(buffer, ' ', spec->field_width - 5);
 	if (!(spec->flags & LEFT_ALIGN))
 		ft_strbuilder_addstr(buffer, "(nil)", 5);
 }
