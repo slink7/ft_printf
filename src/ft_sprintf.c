@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2025/10/26 23:37:58 by scambier         ###   ########.fr       */
+/*   Updated: 2025/10/27 00:05:12 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ static void	handle_specification(t_strb *buffer, t_conv_spec *spec, va_list ap)
 		add_pointer(buffer, spec, va_arg(ap, unsigned long));
 	else if (spec->specifier == '%')
 		ft_strb_addchar(buffer, '%');
+	else {
+		ft_strb_addchar(buffer, '%');
+		spec->length = 1;
+	}
 }
 
 int	ft_vsprintf(char **out, const char	*format, va_list ap)
@@ -56,8 +60,8 @@ int	ft_vsprintf(char **out, const char	*format, va_list ap)
 	while (next_spec)
 	{
 		ft_strb_addstr(buffer, (char *)format, (int)(next_spec - format));
-		if (read_conversion_specification(&spec, next_spec, ap))
-			handle_specification(buffer, &spec, ap);
+		read_conversion_specification(&spec, next_spec, ap);
+		handle_specification(buffer, &spec, ap);
 		format = next_spec + spec.length;
 		next_spec = ft_strchr(format, '%');
 	}

@@ -74,6 +74,11 @@ void	test_null() {
 	TEST("NULL4", "%5c now you see\n", '\0')
 }
 
+void	test_unhandled() {
+	TEST("UH0", "%f %g %o\n", 16.0f, 156, 80);
+	TEST("UH0", "%156% %-% %+- .5%\n", 16.0f, 156, 80);
+}
+
 #include <stdio.h>
 
 int	main(int argc, char** argv) {
@@ -81,6 +86,6 @@ int	main(int argc, char** argv) {
 	// tests_d();
 	// tests_u();
 	// test_p();
-
-	test_null();
+	// test_null();
+	test_unhandled();
 }
