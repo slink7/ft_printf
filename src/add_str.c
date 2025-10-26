@@ -13,7 +13,7 @@
 #include "libft.h"
 #include "conversion_specification.h"
 
-void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str)
+void	add_str(t_strb *buffer, t_conv_spec *spec, char *str)
 {
 	int	precise_size;
 
@@ -25,8 +25,8 @@ void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str)
 		str = "";
 	precise_size = ft_min(ft_strlen(str), spec->precision);
 	if (spec->flags & LEFT_ALIGN)
-		ft_strbuilder_addstr(buffer, str, precise_size);
-	ft_strbuilder_setchars(buffer, ' ', ft_max(spec->field_width - precise_size, 0));
+		ft_strb_addstr(buffer, str, precise_size);
+	ft_strb_setchars(buffer, ' ', ft_max(spec->field_width - precise_size, 0));
 	if (!(spec->flags & LEFT_ALIGN))
-		ft_strbuilder_addstr(buffer, str, precise_size);
+		ft_strb_addstr(buffer, str, precise_size);
 }

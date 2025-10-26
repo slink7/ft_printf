@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 09:15:37 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 02:49:24 by scambier         ###   ########.fr       */
+/*   Updated: 2025/10/26 17:52:50 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 
 # include "stdarg.h"
 
-char	*ft_vsprintf(const char *format, va_list ap);
-char	*ft_sprintf(const char *format, ...);
+int	ft_vsprintf(char **out, const char *format, va_list ap);
+int	ft_sprintf(char **out, const char *format, ...);
 
-int		ft_vdprintf(int fd, const char *format, va_list ap);
-int		ft_dprintf(int fd, const char *format, ...);
+int	ft_vdprintf(int fd, const char *format, va_list ap);
+int	ft_dprintf(int fd, const char *format, ...);
 
-int		ft_vprintf(const char *format, va_list ap);
-int		ft_printf(const char *format, ...);
+int	ft_vprintf(const char *format, va_list ap);
+int	ft_printf(const char *format, ...);
 
 #endif

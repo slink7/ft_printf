@@ -6,7 +6,7 @@
 /*   By: scambier <scambier@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/12/02 08:56:32 by scambier          #+#    #+#             */
-/*   Updated: 2024/12/04 17:45:07 by scambier         ###   ########.fr       */
+/*   Updated: 2025/10/26 23:37:58 by scambier         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
 #include "libft.h"
 #include "conversion_specification.h"
 
-void	add_char(t_strbuilder *buffer, t_conv_spec *spec, char c);
-void	add_str(t_strbuilder *buffer, t_conv_spec *spec, char *str);
-void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi);
-void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value);
-void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value);
+void	add_char(t_strb *buffer, t_conv_spec *spec, char c);
+void	add_str(t_strb *buffer, t_conv_spec *spec, char *str);
+void	add_unsigned(t_strb *buffer, t_conv_spec *spec, unsigned int value, unsigned int bi);
+void	add_int(t_strb *buffer, t_conv_spec *spec, int value);
+void	add_pointer(t_strb *buffer, t_conv_spec *spec, unsigned long value);
 
-static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_list ap)
+static void	handle_specification(t_strb *buffer, t_conv_spec *spec, va_list ap)
 {
 	if (spec->specifier == 's')
 		add_str(buffer, spec, va_arg(ap, char *));
@@ -39,41 +39,42 @@ static void	handle_specification(t_strbuilder *buffer, t_conv_spec *spec, va_lis
 	else if (spec->specifier == 'p')
 		add_pointer(buffer, spec, va_arg(ap, unsigned long));
 	else if (spec->specifier == '%')
-		ft_strbuilder_addchar(buffer, '%');
+		ft_strb_addchar(buffer, '%');
 }
 
-char	*ft_vsprintf(const char	*format, va_list ap)
+int	ft_vsprintf(char **out, const char	*format, va_list ap)
 {
 	t_conv_spec		spec;
-	t_strbuilder	*buffer;
+	t_strb	*buffer;
 	char			*next_spec;
-	char			*out;
+	unsigned int	out_len;
 
-	buffer = ft_strbuilder_new();
+	buffer = ft_strb_new();
 	if (!buffer)
 		return (0);
 	next_spec = ft_strchr(format, '%');
 	while (next_spec)
 	{
-		ft_strbuilder_addstr(buffer, (char *)format, (int)(next_spec - format));
+		ft_strb_addstr(buffer, (char *)format, (int)(next_spec - format));
 		if (read_conversion_specification(&spec, next_spec, ap))
 			handle_specification(buffer, &spec, ap);
 		format = next_spec + spec.length;
 		next_spec = ft_strchr(format, '%');
 	}
-	ft_strbuilder_addstr(buffer, (char *)format, ft_strlen(format));
-	out = ft_strbuilder_build(buffer);
-	ft_strbuilder_free(&buffer);
-	return (out);
+	ft_strb_addstr(buffer, (char *)format, ft_strlen(format));
+	*out = ft_strb_build(buffer);
+	out_len = ft_strb_len(buffer);
+	ft_strb_free(&buffer);
+	return (out_len);
 }
 
-char	*ft_sprintf(const char	*format, ...)
+int	ft_sprintf(char **out, const char *format, ...)
 {
 	va_list	ap;
-	char	*out;
+	size_t	out_len;
 
 	va_start(ap, format);
-	out = ft_vsprintf(format, ap);
+	out_len = ft_vsprintf(out, format, ap);
 	va_end(ap);
-	return (out);
+	return (out_len);
 }

@@ -34,14 +34,14 @@ int	ft_nbrlen(unsigned long n, unsigned int base)
 	return (out);
 }
 
-void	add_int_base_rec(t_strbuilder *buffer, unsigned long value, t_base *base)
+void	add_int_base_rec(t_strb *buffer, unsigned long value, t_base *base)
 {
 	if (value >= base->size)
 		add_int_base_rec(buffer, value / base->size, base);
-	ft_strbuilder_addchar(buffer, base->digits[value % base->size]);
+	ft_strb_addchar(buffer, base->digits[value % base->size]);
 }
 
-void	add_int_base(t_strbuilder *buffer, unsigned long value, t_base *base, int precision)
+void	add_int_base(t_strb *buffer, unsigned long value, t_base *base, int precision)
 {
 	int	nbrlen;
 	int	k;
@@ -51,11 +51,11 @@ void	add_int_base(t_strbuilder *buffer, unsigned long value, t_base *base, int p
 	nbrlen = ft_nbrlen(value, base->size);
 	k = -1;
 	while (++k < (precision - nbrlen))
-		ft_strbuilder_addchar(buffer, base->digits[0]);
+		ft_strb_addchar(buffer, base->digits[0]);
 	add_int_base_rec(buffer, value, base);
 }
 
-void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
+void	add_int(t_strb *buffer, t_conv_spec *spec, int value)
 {
 	static t_base	base = {"0123456789", 10u, 0};
 	int				number_len;
@@ -75,20 +75,20 @@ void	add_int(t_strbuilder *buffer, t_conv_spec *spec, int value)
 	if (spec->field_width > 0 && value == 0 && spec->precision == 0)
 		number_len--;
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && (spec->flags & ZERO_PAD))
-		ft_strbuilder_addchar(buffer, sign);
+		ft_strb_addchar(buffer, sign);
 	if (!(spec->flags & LEFT_ALIGN))
-		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
+		ft_strb_setchars(buffer, padding, spec->field_width - number_len);
 	if ((spec->flags & SIGNED || spec->flags & SPACE || value < 0) && !(spec->flags & ZERO_PAD))
-		ft_strbuilder_addchar(buffer, sign);
+		ft_strb_addchar(buffer, sign);
 	if (value < 0)
 		add_int_base(buffer, (unsigned int)-value, &base, spec->precision);
 	else
 		add_int_base(buffer, value, &base, spec->precision);
 	if ((spec->flags & LEFT_ALIGN))
-		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
+		ft_strb_setchars(buffer, padding, spec->field_width - number_len);
 }
 
-void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, unsigned int bi)
+void	add_unsigned(t_strb *buffer, t_conv_spec *spec, unsigned long value, unsigned int bi)
 {
 	static t_base	bases[] = {
 	{"0123456789", 10u, ""},
@@ -107,19 +107,19 @@ void	add_unsigned(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value, 
 	if (spec->field_width > 0 && value == 0 && spec->precision == 0)
 		number_len--;
 	if (spec->flags & ZERO_PAD && spec->flags & PREFIX && value != 0)
-		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
+		ft_strb_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	if (!(spec->flags & LEFT_ALIGN))
-		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
+		ft_strb_setchars(buffer, padding, spec->field_width - number_len);
 	if ((spec->flags & PREFIX) && !(spec->flags & ZERO_PAD) && value != 0)
-		ft_strbuilder_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
+		ft_strb_addstr(buffer, bases[bi].prefix, ft_strlen(bases[bi].prefix));
 	add_int_base(buffer, value, bases + bi, spec->precision);
 	if ((spec->flags & LEFT_ALIGN))
-		ft_strbuilder_setchars(buffer, padding, spec->field_width - number_len);
+		ft_strb_setchars(buffer, padding, spec->field_width - number_len);
 }
 
 #include <stdio.h>
 
-void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value)
+void	add_pointer(t_strb *buffer, t_conv_spec *spec, unsigned long value)
 {
 	if (value)
 	{
@@ -128,8 +128,8 @@ void	add_pointer(t_strbuilder *buffer, t_conv_spec *spec, unsigned long value)
 		return ;
 	}
 	if (spec->flags & LEFT_ALIGN)
-		ft_strbuilder_addstr(buffer, "(nil)", 5);
-	ft_strbuilder_setchars(buffer, ' ', spec->field_width - 5);
+		ft_strb_addstr(buffer, "(nil)", 5);
+	ft_strb_setchars(buffer, ' ', spec->field_width - 5);
 	if (!(spec->flags & LEFT_ALIGN))
-		ft_strbuilder_addstr(buffer, "(nil)", 5);
+		ft_strb_addstr(buffer, "(nil)", 5);
 }

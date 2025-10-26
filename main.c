@@ -66,11 +66,21 @@ void	test_p() {
 	TEST("P2", "[%020p] [%.20p]\n", 0, 0);
 }
 
+void	test_null() {
+	TEST("NULL0", " 01234\00056789\n", 0);
+	TEST("NULL1", "", 0);
+	TEST("NULL2", "%d\n", 0);
+	TEST("NULL3", "%c salut %c\n", 0, 0);
+	TEST("NULL4", "%5c now you see\n", '\0')
+}
+
 #include <stdio.h>
 
 int	main(int argc, char** argv) {
 	// tests_cs();
-	tests_d();
+	// tests_d();
 	// tests_u();
 	// test_p();
+
+	test_null();
 }
